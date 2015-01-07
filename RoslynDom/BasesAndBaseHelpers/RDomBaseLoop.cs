@@ -6,82 +6,82 @@ using System.Linq;
 
 namespace RoslynDom
 {
-    public abstract class RDomBaseLoop<T>
-        : RDomBase<T, ISymbol>, IStatement
-        where T : class, ILoop<T>, IStatement
-    {
-        private RDomCollection<IStatementAndDetail> _statements;
+   public abstract class RDomBaseLoop<T>
+       : RDomBase<T, ISymbol>, IStatement
+       where T : class, ILoop<T>, IStatement
+   {
+      private RDomCollection<IStatementAndDetail> _statements;
 
-        protected RDomBaseLoop(IExpression condition, bool testAtEnd, bool hasBlock)
-            : base()
-        {
-            Initialize();
-            _condition = condition;
-            _testAtEnd = testAtEnd;
-            _hasBlock = hasBlock;
-        }
+      protected RDomBaseLoop(IExpression condition, bool testAtEnd, bool hasBlock)
+         : base()
+      {
+         Initialize();
+         _condition = condition;
+         _testAtEnd = testAtEnd;
+         _hasBlock = hasBlock;
+      }
 
-        internal RDomBaseLoop(SyntaxNode rawItem, IDom parent, SemanticModel model)
-            : base(rawItem, parent, model)
-        {
-            Initialize();
-        }
+      internal RDomBaseLoop(SyntaxNode rawItem, IDom parent, SemanticModel model)
+         : base(rawItem, parent, model)
+      {
+         Initialize();
+      }
 
-        internal RDomBaseLoop(T oldRDom)
-            : base(oldRDom)
-        {
-            Initialize();
-            _statements = oldRDom.StatementsAll.Copy(this);
-            _condition = oldRDom.Condition == null ? null : oldRDom.Condition.Copy();
-            _testAtEnd = oldRDom.TestAtEnd;
-            _hasBlock = oldRDom.HasBlock;
-        }
+      internal RDomBaseLoop(T oldRDom)
+         : base(oldRDom)
+      {
+         Initialize();
+         _statements = oldRDom.StatementsAll.Copy(this);
+         _condition = oldRDom.Condition == null ? null : oldRDom.Condition.Copy();
+         _testAtEnd = oldRDom.TestAtEnd;
+         _hasBlock = oldRDom.HasBlock;
+      }
 
-        protected void Initialize()
-        {
-            _statements = new RDomCollection<IStatementAndDetail>(this);
-        }
+      protected void Initialize()
+      {
+         _statements = new RDomCollection<IStatementAndDetail>(this);
+      }
 
-        public override IEnumerable<IDom> Children
-        {
-            get
-            {
-                var list = base.Children.ToList();
-                list.Add(Condition);
-                list.AddRange(Statements);
-                return list;
-            }
-        }
+      public override IEnumerable<IDom> Children
+      {
+         get
+         {
+            var list = base.Children.ToList();
+            list.Add(Condition);
+            list.AddRange(Statements);
+            return list;
+         }
+      }
 
-        private IExpression _condition;
+      private IExpression _condition;
 
-        [Required]
-        public IExpression Condition
-        {
-            get { return _condition; }
-            set { SetProperty(ref _condition, value); }
-        }
+      [Required]
+      public IExpression Condition
+      {
+         get { return _condition; }
+         set { SetProperty(ref _condition, value); }
+      }
 
-        private bool _testAtEnd;
+      private bool _testAtEnd;
 
-        public bool TestAtEnd
-        {
-            get { return _testAtEnd; }
-            set { SetProperty(ref _testAtEnd, value); }
-        }
+      public bool TestAtEnd
+      {
+         get { return _testAtEnd; }
+         set { SetProperty(ref _testAtEnd, value); }
+      }
 
-        private bool _hasBlock;
+      private bool _hasBlock;
 
-        public bool HasBlock
-        {
-            get { return _hasBlock; }
-            set { SetProperty(ref _hasBlock, value); }
-        }
+      public bool HasBlock
+      {
+         get { return _hasBlock; }
+         set { SetProperty(ref _hasBlock, value); }
+      }
 
-        public IEnumerable<IStatement> Statements
-        { get { return _statements.OfType<IStatement>().ToList(); } }
+      public IEnumerable<IStatement> Statements
+      { get { return _statements.OfType<IStatement>().ToList(); } }
 
-        public RDomCollection<IStatementAndDetail> StatementsAll
-        { get { return _statements; } }
-    }
+      public RDomCollection<IStatementAndDetail> StatementsAll
+      { get { return _statements; } }
+   }
 }

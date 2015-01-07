@@ -1,6 +1,6 @@
 ﻿namespace RoslynDom.Common
 {
-    public interface IBreakStatement : IStatement, IDom<IBreakStatement>
-    {
-    }
+   public interface IBreakStatement : IStatement, IDom<IBreakStatement>
+   {
+   }
 }

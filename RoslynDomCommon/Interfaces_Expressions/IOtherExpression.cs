@@ -1,6 +1,6 @@
 ﻿namespace RoslynDom.Common
 {
-    public interface IOtherExpression : IExpression
-    {
-    }
+   public interface IOtherExpression : IExpression
+   {
+   }
 }

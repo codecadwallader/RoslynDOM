@@ -2,18 +2,18 @@
 
 namespace RoslynDom.Common
 {
-    public interface IRoot : IDom<IRoot>, IStemContainer, IHasName
-    {
-        IEnumerable<IClass> RootClasses { get; }
+   public interface IRoot : IDom<IRoot>, IStemContainer, IHasName
+   {
+      IEnumerable<IClass> RootClasses { get; }
 
-        IEnumerable<IInterface> RootInterfaces { get; }
+      IEnumerable<IInterface> RootInterfaces { get; }
 
-        IEnumerable<IEnum> RootEnums { get; }
+      IEnumerable<IEnum> RootEnums { get; }
 
-        IEnumerable<IStructure> RootStructures { get; }
+      IEnumerable<IStructure> RootStructures { get; }
 
-        bool HasSyntaxErrors { get; }
+      bool HasSyntaxErrors { get; }
 
-        string FilePath { get; set; }
-    }
+      string FilePath { get; set; }
+   }
 }

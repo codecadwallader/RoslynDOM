@@ -1,7 +1,7 @@
 ﻿namespace RoslynDom.Common
 {
-    public interface IInvocationExpression : IHasInvocationFeatures, IExpression
-    {
-        RDomCollection<IArgument> Arguments { get; }
-    }
+   public interface IInvocationExpression : IHasInvocationFeatures, IExpression
+   {
+      RDomCollection<IArgument> Arguments { get; }
+   }
 }

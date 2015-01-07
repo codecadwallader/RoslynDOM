@@ -1,6 +1,6 @@
 ﻿namespace RoslynDomCSharpFactories
 {
-    public class LoadContext
-    {
-    }
+   public class LoadContext
+   {
+   }
 }

@@ -1,6 +1,6 @@
 ﻿namespace RoslynDomCSharpFactories.Trivia
 {
-    public class TriviaForClasss
-    {
-    }
+   public class TriviaForClasss
+   {
+   }
 }

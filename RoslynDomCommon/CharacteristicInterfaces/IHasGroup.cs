@@ -2,8 +2,8 @@
 
 namespace RoslynDom.Common
 {
-    public interface IHasGroup : IDom
-    {
-        Guid GroupGuid { get; }
-    }
+   public interface IHasGroup : IDom
+   {
+      Guid GroupGuid { get; }
+   }
 }

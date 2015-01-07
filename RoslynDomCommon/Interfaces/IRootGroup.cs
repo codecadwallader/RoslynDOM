@@ -1,9 +1,9 @@
 ﻿namespace RoslynDom.Common
 {
-    public interface IRootGroup : IDom<IRootGroup>
-    {
-        RDomCollection<IRoot> Roots { get; }
+   public interface IRootGroup : IDom<IRootGroup>
+   {
+      RDomCollection<IRoot> Roots { get; }
 
-        bool HasSyntaxErrors { get; }
-    }
+      bool HasSyntaxErrors { get; }
+   }
 }

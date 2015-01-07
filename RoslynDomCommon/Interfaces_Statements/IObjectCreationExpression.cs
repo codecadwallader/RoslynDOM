@@ -2,10 +2,10 @@
 
 namespace RoslynDom.Common
 {
-    public interface IObjectCreationExpression : IExpression
-    {
-        IReferencedType Type { get; set; }
+   public interface IObjectCreationExpression : IExpression
+   {
+      IReferencedType Type { get; set; }
 
-        IEnumerable<IArgument> Arguments { get; }
-    }
+      IEnumerable<IArgument> Arguments { get; }
+   }
 }

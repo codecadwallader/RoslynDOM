@@ -1,7 +1,7 @@
 ﻿namespace RoslynDom.Common
 {
-    public interface IContainerCheck
-    {
-        bool ContainerCheck();
-    }
+   public interface IContainerCheck
+   {
+      bool ContainerCheck();
+   }
 }

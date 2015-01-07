@@ -5,12 +5,12 @@ using System.Collections.Generic;
 
 namespace RoslynDom.CSharp
 {
-    internal interface ICSharpBuildSyntaxWorker : IBuildSyntaxWorker
-    {
-        SyntaxList<AttributeListSyntax> BuildAttributeSyntax(AttributeCollection attributes);
+   internal interface ICSharpBuildSyntaxWorker : IBuildSyntaxWorker
+   {
+      SyntaxList<AttributeListSyntax> BuildAttributeSyntax(AttributeCollection attributes);
 
-        BlockSyntax GetStatementBlock(IEnumerable<IStatementAndDetail> statements);
+      BlockSyntax GetStatementBlock(IEnumerable<IStatementAndDetail> statements);
 
-        TypeSyntax GetVariableTypeSyntax(bool isImplicitlyTypes, IReferencedType type);
-    }
+      TypeSyntax GetVariableTypeSyntax(bool isImplicitlyTypes, IReferencedType type);
+   }
 }

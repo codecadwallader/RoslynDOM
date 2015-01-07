@@ -1,9 +1,9 @@
 ﻿namespace RoslynDom.Common
 {
-    /// <summary>
-    ///
-    /// </summary>
-    public interface IEndIfDetail : IDetail<IEndIfDetail>
-    {
-    }
+   /// <summary>
+   ///
+   /// </summary>
+   public interface IEndIfDetail : IDetail<IEndIfDetail>
+   {
+   }
 }

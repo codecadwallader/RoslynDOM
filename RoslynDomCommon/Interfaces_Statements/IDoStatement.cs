@@ -1,6 +1,6 @@
 ﻿namespace RoslynDom.Common
 {
-    public interface IDoStatement : ILoop<IDoStatement>
-    {
-    }
+   public interface IDoStatement : ILoop<IDoStatement>
+   {
+   }
 }

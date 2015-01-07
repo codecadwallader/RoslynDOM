@@ -1,6 +1,6 @@
 ﻿namespace RoslynDom.Common
 {
-    //public  interface IHasConstructors
-    //  {
-    //  }
+   //public  interface IHasConstructors
+   //  {
+   //  }
 }

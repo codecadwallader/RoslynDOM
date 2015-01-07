@@ -8,95 +8,95 @@ using System.Runtime.CompilerServices;
 
 namespace RoslynDom
 {
-    public class Provider
-    {
-        private IUnityContainer unityContainer = new UnityContainer();
-        internal bool isLoaded;
+   public class Provider
+   {
+      private IUnityContainer unityContainer = new UnityContainer();
+      internal bool isLoaded;
 
-        internal void ConfigureContainer(RDomCorporation corporation)
-        {
-            var types = AllClasses.FromAssembliesInBasePath()
-                          .Where(x => x.Namespace != null
-                                    && x.Namespace.StartsWith("RoslynDom"));
-            // TODO: *** Load other things, at least SameIntent and IWorker
-            LoadIntoContainerWithArgument<IRDomFactory, RDomCorporation>(types, corporation);
-            LoadIntoContainerWithArgument<IRDomCompilationFactory, RDomCorporation>(types, corporation);
-            LoadIntoContainer<IContainerCheck>(types);
-            LoadIntoContainer<IWorker>(types);
-            //LoadIntoContainerWithArgument<ICreateFromWorker, RDomCorporation>(types, corporation);
-            //LoadIntoContainerWithArgument<IBuildSyntaxWorker, RDomCorporation>(types, corporation);
-            LoadIntoContainer<ISameIntent>(types);
-            isLoaded = true;
-        }
+      internal void ConfigureContainer(RDomCorporation corporation)
+      {
+         var types = AllClasses.FromAssembliesInBasePath()
+                       .Where(x => x.Namespace != null
+                                 && x.Namespace.StartsWith("RoslynDom"));
+         // TODO: *** Load other things, at least SameIntent and IWorker
+         LoadIntoContainerWithArgument<IRDomFactory, RDomCorporation>(types, corporation);
+         LoadIntoContainerWithArgument<IRDomCompilationFactory, RDomCorporation>(types, corporation);
+         LoadIntoContainer<IContainerCheck>(types);
+         LoadIntoContainer<IWorker>(types);
+         //LoadIntoContainerWithArgument<ICreateFromWorker, RDomCorporation>(types, corporation);
+         //LoadIntoContainerWithArgument<IBuildSyntaxWorker, RDomCorporation>(types, corporation);
+         LoadIntoContainer<ISameIntent>(types);
+         isLoaded = true;
+      }
 
-        [ExcludeFromCodeCoverage]
-        private void AssertLoaded()
-        {
-            if (!isLoaded || unityContainer == null)
+      [ExcludeFromCodeCoverage]
+      private void AssertLoaded()
+      {
+         if (!isLoaded || unityContainer == null)
+         {
+            Guardian.Assert.AccessedProviderBeforeInitialization(typeof(Provider));
+         }
+      }
+
+      internal IEnumerable<T> GetItems<T>(
+          [CallerMemberName] string callerName = "",
+          [CallerLineNumber] int callerLineNumber = 0)
+      {
+         AssertLoaded();
+         return UnityContainer.ResolveAll<T>();
+      }
+
+      internal bool CheckContainer(
+          [CallerMemberName] string callerName = "",
+          [CallerLineNumber] int callerLineNumber = 0)
+      {
+         AssertLoaded();
+         var containerChecks = UnityContainer.ResolveAll<IContainerCheck>();
+         foreach (var check in containerChecks)
+         {
+            if (!check.ContainerCheck()) { return false; }
+         }
+         return true;
+      }
+
+      private void LoadIntoContainer<T>(
+                    IEnumerable<Type> types)
+      {
+         var factoryType = typeof(T);
+         foreach (var type in types)
+         {
+            if (factoryType.IsAssignableFrom(type))
             {
-                Guardian.Assert.AccessedProviderBeforeInitialization(typeof(Provider));
+               unityContainer.RegisterType(factoryType, type, type.FullName,
+                          new ContainerControlledLifetimeManager(),
+                          new InjectionMember[] { });
             }
-        }
+         }
+      }
 
-        internal IEnumerable<T> GetItems<T>(
-            [CallerMemberName] string callerName = "",
-            [CallerLineNumber] int callerLineNumber = 0)
-        {
+      private void LoadIntoContainerWithArgument<T, TArg>(
+                    IEnumerable<Type> types,
+                    TArg argument)
+      {
+         var factoryType = typeof(T);
+         foreach (var type in types)
+         {
+            if (factoryType.IsAssignableFrom(type))
+            {
+               unityContainer.RegisterType(factoryType, type, type.FullName,
+                          new ContainerControlledLifetimeManager(),
+                          new InjectionMember[] { new InjectionConstructor(argument) });
+            }
+         }
+      }
+
+      private IUnityContainer UnityContainer
+      {
+         get
+         {
             AssertLoaded();
-            return UnityContainer.ResolveAll<T>();
-        }
-
-        internal bool CheckContainer(
-            [CallerMemberName] string callerName = "",
-            [CallerLineNumber] int callerLineNumber = 0)
-        {
-            AssertLoaded();
-            var containerChecks = UnityContainer.ResolveAll<IContainerCheck>();
-            foreach (var check in containerChecks)
-            {
-                if (!check.ContainerCheck()) { return false; }
-            }
-            return true;
-        }
-
-        private void LoadIntoContainer<T>(
-                      IEnumerable<Type> types)
-        {
-            var factoryType = typeof(T);
-            foreach (var type in types)
-            {
-                if (factoryType.IsAssignableFrom(type))
-                {
-                    unityContainer.RegisterType(factoryType, type, type.FullName,
-                               new ContainerControlledLifetimeManager(),
-                               new InjectionMember[] { });
-                }
-            }
-        }
-
-        private void LoadIntoContainerWithArgument<T, TArg>(
-                      IEnumerable<Type> types,
-                      TArg argument)
-        {
-            var factoryType = typeof(T);
-            foreach (var type in types)
-            {
-                if (factoryType.IsAssignableFrom(type))
-                {
-                    unityContainer.RegisterType(factoryType, type, type.FullName,
-                               new ContainerControlledLifetimeManager(),
-                               new InjectionMember[] { new InjectionConstructor(argument) });
-                }
-            }
-        }
-
-        private IUnityContainer UnityContainer
-        {
-            get
-            {
-                AssertLoaded();
-                return unityContainer;
-            }
-        }
-    }
+            return unityContainer;
+         }
+      }
+   }
 }

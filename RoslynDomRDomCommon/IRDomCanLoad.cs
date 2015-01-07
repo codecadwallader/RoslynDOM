@@ -1,6 +1,6 @@
 ﻿namespace RoslynDom
 {
-    internal interface IRDomCanLoad
-    {
-    }
+   internal interface IRDomCanLoad
+   {
+   }
 }

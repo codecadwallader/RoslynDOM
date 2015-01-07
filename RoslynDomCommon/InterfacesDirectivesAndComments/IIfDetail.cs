@@ -1,9 +1,9 @@
 ﻿namespace RoslynDom.Common
 {
-    /// <summary>
-    ///
-    /// </summary>
-    public interface IIfDetail : IDetail<IIfDetail>
-    {
-    }
+   /// <summary>
+   ///
+   /// </summary>
+   public interface IIfDetail : IDetail<IIfDetail>
+   {
+   }
 }

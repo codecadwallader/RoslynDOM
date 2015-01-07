@@ -1,6 +1,6 @@
 ﻿namespace RoslynDom.Common
 {
-    public interface IStatementAndDetail : IDom
-    {
-    }
+   public interface IStatementAndDetail : IDom
+   {
+   }
 }

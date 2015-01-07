@@ -2,44 +2,44 @@ using System.Collections.Generic;
 
 namespace RoslynDom.Common
 {
-    public interface IDom : IHasSameIntentMethod
-    {
-        object RawItem { get; }
+   public interface IDom : IHasSameIntentMethod
+   {
+      object RawItem { get; }
 
-        object OriginalRawItem { get; }
+      object OriginalRawItem { get; }
 
-        bool NeedsFormatting { get; set; }
+      bool NeedsFormatting { get; set; }
 
-        Whitespace2Collection Whitespace2Set { get; }
+      Whitespace2Collection Whitespace2Set { get; }
 
-        void EnsureNewLineAfter();
+      void EnsureNewLineAfter();
 
-        void EnsureLeading(string whitespace);
+      void EnsureLeading(string whitespace);
 
-        bool Matches(IDom other);
+      bool Matches(IDom other);
 
-        IDom Parent { get; }
+      IDom Parent { get; }
 
-        IEnumerable<IDom> Children { get; }
+      IEnumerable<IDom> Children { get; }
 
-        IEnumerable<IDom> Ancestors { get; }
+      IEnumerable<IDom> Ancestors { get; }
 
-        IEnumerable<IDom> AncestorsAndSelf { get; }
+      IEnumerable<IDom> AncestorsAndSelf { get; }
 
-        IEnumerable<IDom> Descendants { get; }
+      IEnumerable<IDom> Descendants { get; }
 
-        IEnumerable<IDom> DescendantsAndSelf { get; }
+      IEnumerable<IDom> DescendantsAndSelf { get; }
 
-        string ReportHierarchy();
+      string ReportHierarchy();
 
-        object RequestValue(string propertyName);
+      object RequestValue(string propertyName);
 
-        object RequestValue(string propertyName, bool searchUpLogicalTree);
-    }
+      object RequestValue(string propertyName, bool searchUpLogicalTree);
+   }
 
-    public interface IDom<T> : IDom
-        where T : IDom<T>
-    {
-        T Copy();
-    }
+   public interface IDom<T> : IDom
+       where T : IDom<T>
+   {
+      T Copy();
+   }
 }

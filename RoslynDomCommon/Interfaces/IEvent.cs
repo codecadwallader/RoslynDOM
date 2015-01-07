@@ -1,14 +1,14 @@
 namespace RoslynDom.Common
 {
-    public interface IEvent :
-             ICanBeStatic,
-             ITypeMember,
-             IOOTypeMember,
-             ICanBeNew,
-             IDom<IEvent>
-    {
-        IReferencedType Type { get; set; }
+   public interface IEvent :
+            ICanBeStatic,
+            ITypeMember,
+            IOOTypeMember,
+            ICanBeNew,
+            IDom<IEvent>
+   {
+      IReferencedType Type { get; set; }
 
-        // not yet supporting event accessors
-    }
+      // not yet supporting event accessors
+   }
 }

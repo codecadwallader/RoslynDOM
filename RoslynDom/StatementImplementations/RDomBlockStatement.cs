@@ -5,44 +5,44 @@ using System.Linq;
 
 namespace RoslynDom
 {
-    public class RDomBlockStatement : RDomBase<IBlockStatement, ISymbol>, IBlockStatement
-    {
-        private RDomCollection<IStatementAndDetail> _statements;
+   public class RDomBlockStatement : RDomBase<IBlockStatement, ISymbol>, IBlockStatement
+   {
+      private RDomCollection<IStatementAndDetail> _statements;
 
-        public RDomBlockStatement()
-            : base()
-        {
-            Initialize();
-        }
+      public RDomBlockStatement()
+         : base()
+      {
+         Initialize();
+      }
 
-        public RDomBlockStatement(SyntaxNode rawItem, IDom parent, SemanticModel model)
-            : base(rawItem, parent, model)
-        { Initialize(); }
+      public RDomBlockStatement(SyntaxNode rawItem, IDom parent, SemanticModel model)
+         : base(rawItem, parent, model)
+      { Initialize(); }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
-         "CA1811:AvoidUncalledPrivateCode", Justification = "Called via Reflection")]
-        internal RDomBlockStatement(RDomBlockStatement oldRDom)
-            : base(oldRDom)
-        {
-            _statements = oldRDom.Statements.Copy(this);
-        }
+      [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
+       "CA1811:AvoidUncalledPrivateCode", Justification = "Called via Reflection")]
+      internal RDomBlockStatement(RDomBlockStatement oldRDom)
+         : base(oldRDom)
+      {
+         _statements = oldRDom.Statements.Copy(this);
+      }
 
-        protected void Initialize()
-        {
-            _statements = new RDomCollection<IStatementAndDetail>(this);
-        }
+      protected void Initialize()
+      {
+         _statements = new RDomCollection<IStatementAndDetail>(this);
+      }
 
-        public override IEnumerable<IDom> Children
-        {
-            get
-            {
-                var list = base.Children.ToList();
-                list.AddRange(_statements);
-                return list;
-            }
-        }
+      public override IEnumerable<IDom> Children
+      {
+         get
+         {
+            var list = base.Children.ToList();
+            list.AddRange(_statements);
+            return list;
+         }
+      }
 
-        public RDomCollection<IStatementAndDetail> Statements
-        { get { return _statements; } }
-    }
+      public RDomCollection<IStatementAndDetail> Statements
+      { get { return _statements; } }
+   }
 }

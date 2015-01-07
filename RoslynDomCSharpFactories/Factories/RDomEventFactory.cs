@@ -7,93 +7,93 @@ using System.Linq;
 
 namespace RoslynDom.CSharp
 {
-    public class RDomEventTypeMemberFactory
-          : RDomBaseSyntaxNodeFactory<RDomEvent, EventFieldDeclarationSyntax>
-    {
-        private static WhitespaceKindLookup _whitespaceLookup;
+   public class RDomEventTypeMemberFactory
+         : RDomBaseSyntaxNodeFactory<RDomEvent, EventFieldDeclarationSyntax>
+   {
+      private static WhitespaceKindLookup _whitespaceLookup;
 
-        public RDomEventTypeMemberFactory(RDomCorporation corporation)
-            : base(corporation)
-        { }
+      public RDomEventTypeMemberFactory(RDomCorporation corporation)
+         : base(corporation)
+      { }
 
-        private WhitespaceKindLookup WhitespaceLookup
-        {
-            get
+      private WhitespaceKindLookup WhitespaceLookup
+      {
+         get
+         {
+            if (_whitespaceLookup == null)
             {
-                if (_whitespaceLookup == null)
-                {
-                    _whitespaceLookup = new WhitespaceKindLookup();
-                    _whitespaceLookup.Add(LanguageElement.Identifier, SyntaxKind.IdentifierToken);
-                    _whitespaceLookup.Add(LanguageElement.Event, SyntaxKind.EventKeyword);
-                    _whitespaceLookup.Add(LanguageElement.NewSlot, SyntaxKind.NewKeyword);
-                    _whitespaceLookup.AddRange(WhitespaceKindLookup.AccessModifiers);
-                    _whitespaceLookup.AddRange(WhitespaceKindLookup.OopModifiers);
-                    _whitespaceLookup.AddRange(WhitespaceKindLookup.StaticModifiers);
-                    _whitespaceLookup.AddRange(WhitespaceKindLookup.Eol);
-                }
-                return _whitespaceLookup;
+               _whitespaceLookup = new WhitespaceKindLookup();
+               _whitespaceLookup.Add(LanguageElement.Identifier, SyntaxKind.IdentifierToken);
+               _whitespaceLookup.Add(LanguageElement.Event, SyntaxKind.EventKeyword);
+               _whitespaceLookup.Add(LanguageElement.NewSlot, SyntaxKind.NewKeyword);
+               _whitespaceLookup.AddRange(WhitespaceKindLookup.AccessModifiers);
+               _whitespaceLookup.AddRange(WhitespaceKindLookup.OopModifiers);
+               _whitespaceLookup.AddRange(WhitespaceKindLookup.StaticModifiers);
+               _whitespaceLookup.AddRange(WhitespaceKindLookup.Eol);
             }
-        }
+            return _whitespaceLookup;
+         }
+      }
 
-        protected override IEnumerable<IDom> CreateListFrom(
-           SyntaxNode syntaxNode, IDom parent, SemanticModel model)
-        {
-            var list = new List<ITypeMember>();
+      protected override IEnumerable<IDom> CreateListFrom(
+         SyntaxNode syntaxNode, IDom parent, SemanticModel model)
+      {
+         var list = new List<ITypeMember>();
 
-            //var publicAnnotations = CreateFromWorker.GetPublicAnnotations(syntaxNode, parent, model);
-            var rawEvent = syntaxNode as EventFieldDeclarationSyntax;
-            var declarators = rawEvent.Declaration.Variables.OfType<VariableDeclaratorSyntax>();
-            foreach (var decl in declarators)
+         //var publicAnnotations = CreateFromWorker.GetPublicAnnotations(syntaxNode, parent, model);
+         var rawEvent = syntaxNode as EventFieldDeclarationSyntax;
+         var declarators = rawEvent.Declaration.Variables.OfType<VariableDeclaratorSyntax>();
+         foreach (var decl in declarators)
+         {
+            var newItem = new RDomEvent(decl, parent, model);
+            list.Add(newItem);
+            CreateFromWorker.StandardInitialize(newItem, syntaxNode, parent, model, OutputContext);
+            CreateFromWorker.StoreWhitespace(newItem, syntaxNode, LanguagePart.Current, WhitespaceLookup);
+            CreateFromWorker.StoreWhitespace(newItem, decl, LanguagePart.Current, WhitespaceLookup);
+
+            newItem.Name = newItem.TypedSymbol.Name;
+
+            if (decl.Initializer != null)
             {
-                var newItem = new RDomEvent(decl, parent, model);
-                list.Add(newItem);
-                CreateFromWorker.StandardInitialize(newItem, syntaxNode, parent, model, OutputContext);
-                CreateFromWorker.StoreWhitespace(newItem, syntaxNode, LanguagePart.Current, WhitespaceLookup);
-                CreateFromWorker.StoreWhitespace(newItem, decl, LanguagePart.Current, WhitespaceLookup);
-
-                newItem.Name = newItem.TypedSymbol.Name;
-
-                if (decl.Initializer != null)
-                {
-                    CreateFromWorker.StoreWhitespaceForToken(newItem, decl.Initializer.EqualsToken, LanguagePart.Current, LanguageElement.EqualsAssignmentOperator);
-                    CreateFromWorker.StoreWhitespaceForFirstAndLastToken(newItem, decl.Initializer, LanguagePart.Current, LanguageElement.Expression);
-                }
-
-                var type = OutputContext.Corporation
-                                 .Create(rawEvent.Declaration.Type, newItem, model)
-                                 .FirstOrDefault()
-                                 as IReferencedType;
-                newItem.Type = type;
-
-                var eventSymbol = newItem.Symbol as IEventSymbol;
-                newItem.IsStatic = eventSymbol.IsStatic;
-                // See note on IsNew on interface before changing
-                newItem.IsNew = rawEvent.Modifiers.Any(x => x.CSharpKind() == SyntaxKind.NewKeyword);
-                // newItem.PublicAnnotations.Add(publicAnnotations);
+               CreateFromWorker.StoreWhitespaceForToken(newItem, decl.Initializer.EqualsToken, LanguagePart.Current, LanguageElement.EqualsAssignmentOperator);
+               CreateFromWorker.StoreWhitespaceForFirstAndLastToken(newItem, decl.Initializer, LanguagePart.Current, LanguageElement.Expression);
             }
-            return list;
-        }
 
-        public override IEnumerable<SyntaxNode> BuildSyntax(IDom item)
-        {
-            var itemAsT = item as IEvent;
-            var nameSyntax = SyntaxFactory.Identifier(itemAsT.Name);
+            var type = OutputContext.Corporation
+                             .Create(rawEvent.Declaration.Type, newItem, model)
+                             .FirstOrDefault()
+                             as IReferencedType;
+            newItem.Type = type;
 
-            var typeSyntax = (TypeSyntax)RDom.CSharp.GetSyntaxGroup(itemAsT.Type).First();
-            var modifiers = BuildSyntaxHelpers.BuildModfierSyntax(itemAsT);
-            var variableNode = SyntaxFactory.VariableDeclarator(nameSyntax);
-            var variableNodes = SyntaxFactory.SeparatedList(new VariableDeclaratorSyntax[] { variableNode });
-            var eventNode = SyntaxFactory.VariableDeclaration(typeSyntax, variableNodes);
-            eventNode = BuildSyntaxHelpers.AttachWhitespace(eventNode, itemAsT.Whitespace2Set, WhitespaceLookup);
+            var eventSymbol = newItem.Symbol as IEventSymbol;
+            newItem.IsStatic = eventSymbol.IsStatic;
+            // See note on IsNew on interface before changing
+            newItem.IsNew = rawEvent.Modifiers.Any(x => x.CSharpKind() == SyntaxKind.NewKeyword);
+            // newItem.PublicAnnotations.Add(publicAnnotations);
+         }
+         return list;
+      }
 
-            var node = SyntaxFactory.EventFieldDeclaration(eventNode)
-                           .WithModifiers(modifiers);
-            node = BuildSyntaxHelpers.AttachWhitespace(node, itemAsT.Whitespace2Set, WhitespaceLookup);
+      public override IEnumerable<SyntaxNode> BuildSyntax(IDom item)
+      {
+         var itemAsT = item as IEvent;
+         var nameSyntax = SyntaxFactory.Identifier(itemAsT.Name);
 
-            var attributes = BuildSyntaxWorker.BuildAttributeSyntax(itemAsT.Attributes);
-            if (attributes.Any()) { node = node.WithAttributeLists(BuildSyntaxHelpers.WrapInAttributeList(attributes)); }
+         var typeSyntax = (TypeSyntax)RDom.CSharp.GetSyntaxGroup(itemAsT.Type).First();
+         var modifiers = BuildSyntaxHelpers.BuildModfierSyntax(itemAsT);
+         var variableNode = SyntaxFactory.VariableDeclarator(nameSyntax);
+         var variableNodes = SyntaxFactory.SeparatedList(new VariableDeclaratorSyntax[] { variableNode });
+         var eventNode = SyntaxFactory.VariableDeclaration(typeSyntax, variableNodes);
+         eventNode = BuildSyntaxHelpers.AttachWhitespace(eventNode, itemAsT.Whitespace2Set, WhitespaceLookup);
 
-            return node.PrepareForBuildSyntaxOutput(item, OutputContext);
-        }
-    }
+         var node = SyntaxFactory.EventFieldDeclaration(eventNode)
+                        .WithModifiers(modifiers);
+         node = BuildSyntaxHelpers.AttachWhitespace(node, itemAsT.Whitespace2Set, WhitespaceLookup);
+
+         var attributes = BuildSyntaxWorker.BuildAttributeSyntax(itemAsT.Attributes);
+         if (attributes.Any()) { node = node.WithAttributeLists(BuildSyntaxHelpers.WrapInAttributeList(attributes)); }
+
+         return node.PrepareForBuildSyntaxOutput(item, OutputContext);
+      }
+   }
 }

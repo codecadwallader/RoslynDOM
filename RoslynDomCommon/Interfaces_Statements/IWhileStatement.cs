@@ -1,6 +1,6 @@
 ﻿namespace RoslynDom.Common
 {
-    public interface IWhileStatement : ILoop<IWhileStatement>
-    {
-    }
+   public interface IWhileStatement : ILoop<IWhileStatement>
+   {
+   }
 }

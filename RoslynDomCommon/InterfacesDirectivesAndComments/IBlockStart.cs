@@ -2,17 +2,17 @@
 
 namespace RoslynDom.Common
 {
-    /// <summary>
-    ///
-    /// </summary>
-    public interface IDetailBlockStart : IDetail<IDetailBlockStart>, IHasGroup
-    {
-        IDetailBlockEnd BlockEnd { get; }
+   /// <summary>
+   ///
+   /// </summary>
+   public interface IDetailBlockStart : IDetail<IDetailBlockStart>, IHasGroup
+   {
+      IDetailBlockEnd BlockEnd { get; }
 
-        string Text { get; set; }
+      string Text { get; set; }
 
-        string BlockStyleName { get; }
+      string BlockStyleName { get; }
 
-        IEnumerable<IDom> BlockContents { get; }
-    }
+      IEnumerable<IDom> BlockContents { get; }
+   }
 }

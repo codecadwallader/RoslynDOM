@@ -1,9 +1,9 @@
 ﻿namespace RoslynDom.Common
 {
-    public interface IForStatement : ILoop<IForStatement>
-    {
-        IVariableDeclaration Variable { get; set; }
+   public interface IForStatement : ILoop<IForStatement>
+   {
+      IVariableDeclaration Variable { get; set; }
 
-        IExpression Incrementor { get; set; }
-    }
+      IExpression Incrementor { get; set; }
+   }
 }
