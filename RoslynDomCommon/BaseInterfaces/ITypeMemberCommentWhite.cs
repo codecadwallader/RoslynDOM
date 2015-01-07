@@ -4,6 +4,4 @@
     {
         MemberKind MemberKind { get; }
     }
-
-
 }

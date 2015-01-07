@@ -2,6 +2,6 @@
 {
     public interface IHasReturnType : IDom
     {
-        IReferencedType  ReturnType { get; set; }
+        IReferencedType ReturnType { get; set; }
     }
 }

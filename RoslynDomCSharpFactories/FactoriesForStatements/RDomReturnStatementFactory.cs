@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.CodeAnalysis;
+﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using RoslynDom.Common;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace RoslynDom.CSharp
 {
@@ -32,13 +30,12 @@ namespace RoslynDom.CSharp
             }
         }
 
-        protected override IDom CreateItemFrom(SyntaxNode syntaxNode, IDom parent,SemanticModel model)
+        protected override IDom CreateItemFrom(SyntaxNode syntaxNode, IDom parent, SemanticModel model)
         {
             var syntax = syntaxNode as ReturnStatementSyntax;
-            var newItem = new RDomReturnStatement(syntaxNode,parent, model);
+            var newItem = new RDomReturnStatement(syntaxNode, parent, model);
             CreateFromWorker.StandardInitialize(newItem, syntaxNode, parent, model, OutputContext);
             CreateFromWorker.StoreWhitespace(newItem, syntax, LanguagePart.Current, WhitespaceLookup);
-
 
             if (syntax.Expression != null)
             {
@@ -46,7 +43,7 @@ namespace RoslynDom.CSharp
                 Guardian.Assert.IsNotNull(newItem.Return, nameof(newItem.Return));
             }
 
-            return newItem ;
+            return newItem;
         }
 
         public override IEnumerable<SyntaxNode> BuildSyntax(IDom item)

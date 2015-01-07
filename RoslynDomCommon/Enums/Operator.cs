@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace RoslynDom.Common
+﻿namespace RoslynDom.Common
 {
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming",
         "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Operator",
         Justification = "This is an enum of operators, so name seems appropriate")]
     public enum Operator

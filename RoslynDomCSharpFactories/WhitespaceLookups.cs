@@ -1,47 +1,45 @@
-﻿using System;
+﻿using Microsoft.CodeAnalysis.CSharp;
+using RoslynDom.Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.CSharp;
-using RoslynDom.Common;
 
 namespace RoslynDom.CSharp
 {
-   public class WhitespaceKindLookup
-   {
-      private Dictionary<SyntaxKind, LanguageElement> kindToLanguageElement = new Dictionary<SyntaxKind, LanguageElement>();
-      private Dictionary<LanguageElement, SyntaxKind> languageElementToKind = new Dictionary<LanguageElement, SyntaxKind>();
+    public class WhitespaceKindLookup
+    {
+        private Dictionary<SyntaxKind, LanguageElement> kindToLanguageElement = new Dictionary<SyntaxKind, LanguageElement>();
+        private Dictionary<LanguageElement, SyntaxKind> languageElementToKind = new Dictionary<LanguageElement, SyntaxKind>();
 
-      public void Add(LanguageElement languageElement, SyntaxKind syntaxKind)
-      {
-         kindToLanguageElement.Add(syntaxKind, languageElement);
-         languageElementToKind.Add(languageElement, syntaxKind);
-      }
+        public void Add(LanguageElement languageElement, SyntaxKind syntaxKind)
+        {
+            kindToLanguageElement.Add(syntaxKind, languageElement);
+            languageElementToKind.Add(languageElement, syntaxKind);
+        }
 
-      public void AddRange(IEnumerable<Tuple<LanguageElement, SyntaxKind>> list)
-      {
-         foreach (var item in list)
-         {
-            Add(item.Item1, item.Item2);
-         }
-      }
+        public void AddRange(IEnumerable<Tuple<LanguageElement, SyntaxKind>> list)
+        {
+            foreach (var item in list)
+            {
+                Add(item.Item1, item.Item2);
+            }
+        }
 
-      public LanguageElement Lookup(SyntaxKind syntaxKind)
-      {
-         LanguageElement ret = LanguageElement.NotApplicable;
-         kindToLanguageElement.TryGetValue(syntaxKind, out ret);
-         return ret;
-      }
+        public LanguageElement Lookup(SyntaxKind syntaxKind)
+        {
+            LanguageElement ret = LanguageElement.NotApplicable;
+            kindToLanguageElement.TryGetValue(syntaxKind, out ret);
+            return ret;
+        }
 
-      public SyntaxKind Lookup(LanguageElement languageElement)
-      {
-         SyntaxKind ret = SyntaxKind.None;
-         languageElementToKind.TryGetValue(languageElement, out ret);
-         return ret;
-      }
+        public SyntaxKind Lookup(LanguageElement languageElement)
+        {
+            SyntaxKind ret = SyntaxKind.None;
+            languageElementToKind.TryGetValue(languageElement, out ret);
+            return ret;
+        }
 
-      public static IEnumerable<Tuple<LanguageElement, SyntaxKind>> AccessModifiers = new List<Tuple<LanguageElement, SyntaxKind>>()
+        public static IEnumerable<Tuple<LanguageElement, SyntaxKind>> AccessModifiers = new List<Tuple<LanguageElement, SyntaxKind>>()
             {
                 Tuple.Create( LanguageElement.Public ,    SyntaxKind.PublicKeyword ),
                 Tuple.Create( LanguageElement.Private ,   SyntaxKind.PrivateKeyword ),
@@ -49,7 +47,7 @@ namespace RoslynDom.CSharp
                 Tuple.Create( LanguageElement.Internal ,  SyntaxKind.InternalKeyword )
              };
 
-      public static IEnumerable<Tuple<LanguageElement, SyntaxKind>> OopModifiers = new List<Tuple<LanguageElement, SyntaxKind>>()
+        public static IEnumerable<Tuple<LanguageElement, SyntaxKind>> OopModifiers = new List<Tuple<LanguageElement, SyntaxKind>>()
             {
                 Tuple.Create( LanguageElement.Abstract , SyntaxKind.AbstractKeyword  ),
                 Tuple.Create( LanguageElement.Override , SyntaxKind.OverrideKeyword ),
@@ -57,17 +55,17 @@ namespace RoslynDom.CSharp
                 Tuple.Create( LanguageElement.Virtual ,  SyntaxKind.VirtualKeyword ),
              };
 
-      public static IEnumerable<Tuple<LanguageElement, SyntaxKind>> StaticModifiers = new List<Tuple<LanguageElement, SyntaxKind>>()
+        public static IEnumerable<Tuple<LanguageElement, SyntaxKind>> StaticModifiers = new List<Tuple<LanguageElement, SyntaxKind>>()
             {
                 Tuple.Create( LanguageElement.Static , SyntaxKind.StaticKeyword  )
              };
 
-      public static IEnumerable<Tuple<LanguageElement, SyntaxKind>> Eol = new List<Tuple<LanguageElement, SyntaxKind>>()
+        public static IEnumerable<Tuple<LanguageElement, SyntaxKind>> Eol = new List<Tuple<LanguageElement, SyntaxKind>>()
             {
                 Tuple.Create( LanguageElement.EndOfLine  , SyntaxKind.SemicolonToken    )
              };
 
-      public static IEnumerable<Tuple<LanguageElement, SyntaxKind>> AssignmentOperators = new List<Tuple<LanguageElement, SyntaxKind>>()
+        public static IEnumerable<Tuple<LanguageElement, SyntaxKind>> AssignmentOperators = new List<Tuple<LanguageElement, SyntaxKind>>()
             {
                 Tuple.Create( LanguageElement.EqualsAssignmentOperator,      SyntaxKind.EqualsToken),
                 Tuple.Create( LanguageElement.AddAssignmentOperator,         SyntaxKind.PlusEqualsToken),
@@ -82,7 +80,7 @@ namespace RoslynDom.CSharp
                 Tuple.Create( LanguageElement.RightShiftAssignmentOperator,  SyntaxKind.GreaterThanGreaterThanEqualsToken)
              };
 
-      public static IEnumerable<Tuple<LanguageElement, SyntaxKind>> OverloadableOperators = new List<Tuple<LanguageElement, SyntaxKind>>()
+        public static IEnumerable<Tuple<LanguageElement, SyntaxKind>> OverloadableOperators = new List<Tuple<LanguageElement, SyntaxKind>>()
             {
                Tuple.Create( LanguageElement.PlusOperator  , SyntaxKind.PlusToken     ),
                Tuple.Create( LanguageElement.MinusOperator  , SyntaxKind.MinusToken     ),
@@ -108,18 +106,18 @@ namespace RoslynDom.CSharp
                Tuple.Create( LanguageElement.GreaterThanOrEqualOperator  , SyntaxKind.GreaterThanEqualsToken   ),
              };
 
-      internal IEnumerable<LanguageElement> NotUsedInWhitespaceList(IEnumerable<Whitespace2> whitespaceList)
-      {
-         var ret = languageElementToKind
-                     .Select(x => x.Key)
-                     .ToList();
-         foreach (var whitespace in whitespaceList)
-         {
-            var remove = ret.Where(x => x == whitespace.LanguageElement);
-            if (remove.Any())
-            { ret.Remove(remove.First()); }
-         }
-         return ret;
-      }
-   }
+        internal IEnumerable<LanguageElement> NotUsedInWhitespaceList(IEnumerable<Whitespace2> whitespaceList)
+        {
+            var ret = languageElementToKind
+                        .Select(x => x.Key)
+                        .ToList();
+            foreach (var whitespace in whitespaceList)
+            {
+                var remove = ret.Where(x => x == whitespace.LanguageElement);
+                if (remove.Any())
+                { ret.Remove(remove.First()); }
+            }
+            return ret;
+        }
+    }
 }

@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Microsoft.CodeAnalysis;
+﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using RoslynDom.Common;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace RoslynDom.CSharp
 {
@@ -13,7 +13,7 @@ namespace RoslynDom.CSharp
         private static WhitespaceKindLookup _whitespaceLookup;
 
         public RDomBlockStatementFactory(RDomCorporation corporation)
-              : base(corporation)
+            : base(corporation)
         { }
 
         private WhitespaceKindLookup WhitespaceLookup
@@ -46,6 +46,7 @@ namespace RoslynDom.CSharp
 
             return newItem;
         }
+
         public override IEnumerable<SyntaxNode> BuildSyntax(IDom item)
         {
             var itemAsT = item as IBlockStatement;
@@ -55,8 +56,6 @@ namespace RoslynDom.CSharp
 
             node = BuildSyntaxHelpers.AttachWhitespace(node, itemAsT.Whitespace2Set, WhitespaceLookup);
             return node.PrepareForBuildSyntaxOutput(item, OutputContext);
-
         }
     }
-
 }

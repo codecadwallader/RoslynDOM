@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.CodeAnalysis;
+﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using RoslynDom.Common;
+using System.Linq;
 
 namespace RoslynDom.CSharp
 {
@@ -12,10 +10,10 @@ namespace RoslynDom.CSharp
          : RDomBaseLoopStatementFactory<RDomForEachStatement, ForEachStatementSyntax>
     {
         public RDomForEachStatementFactory(RDomCorporation corporation)
-         : base(corporation)
+            : base(corporation)
         { }
 
-         protected override IDom CreateItemFrom(SyntaxNode syntaxNode, IDom parent, SemanticModel model)
+        protected override IDom CreateItemFrom(SyntaxNode syntaxNode, IDom parent, SemanticModel model)
         {
             var syntax = syntaxNode as ForEachStatementSyntax;
             var newItem = base.CreateItemFrom(syntaxNode, parent, model) as RDomForEachStatement;
@@ -23,7 +21,7 @@ namespace RoslynDom.CSharp
             var newVariable = OutputContext.Corporation.CreateSpecial<IVariableDeclaration>(syntaxNode, newItem, model).FirstOrDefault();
             newItem.Variable = (IVariableDeclaration)newVariable;
             return newItem;
-         }
+        }
 
         protected override ExpressionSyntax GetConditionFromSyntax(ForEachStatementSyntax syntax)
         {

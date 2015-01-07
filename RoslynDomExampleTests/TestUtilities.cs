@@ -6,7 +6,7 @@ namespace RoslynDomExampleTests
 {
     internal static class TestUtilities
     {
-        internal  static string GetNearestSolution(string path)
+        internal static string GetNearestSolution(string path)
         {
             if (Path.GetExtension(path) == ".sln") return path;
             string currentDirectory = path;

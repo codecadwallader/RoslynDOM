@@ -2,7 +2,6 @@
 
 namespace RoslynDom.Tests.Walkthrough_1_code
 {
-
     public class Bar
     {
         private string firstName;
@@ -10,7 +9,6 @@ namespace RoslynDom.Tests.Walkthrough_1_code
 
         public string Foo()
         {
-
             var ret = lastName;
             ret = Foo();
             ret = "xyz";
@@ -27,6 +25,7 @@ namespace RoslynDom.Tests.Walkthrough_1_code
             Foo2(x);
             return x;
         }
+
         private void Foo2(string dummy)
         {
             ulong x = 3;

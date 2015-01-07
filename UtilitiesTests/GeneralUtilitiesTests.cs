@@ -1,7 +1,6 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.IO;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RoslynDom.Common;
+using System;
 using System.Linq;
 
 namespace TestRoslyn
@@ -34,6 +33,7 @@ namespace TestRoslyn
             Assert.IsTrue(result.Any(x => string.Join(",", x) == ""));
             Assert.IsTrue(result.Any(x => string.Join(",", x) == "A"));
         }
+
         [TestMethod]
         public void GetAllCombos_returns_correct_for_AB()
         {
@@ -45,6 +45,7 @@ namespace TestRoslyn
             Assert.IsTrue(result.Any(x => string.Join(",", x) == "A,B"));
             Assert.IsTrue(result.Any(x => string.Join(",", x) == "B"));
         }
+
         [TestMethod]
         public void GetAllCombos_returns_correct_for_ABC()
         {
@@ -60,6 +61,7 @@ namespace TestRoslyn
             Assert.IsTrue(result.Any(x => string.Join(",", x) == "B,C"));
             Assert.IsTrue(result.Any(x => string.Join(",", x) == "C"));
         }
+
         [TestMethod]
         public void GetAllCombos_returns_correct_for_ABCD()
         {
@@ -146,7 +148,7 @@ namespace TestRoslyn
         [TestMethod]
         public void IsFloatingPoint_returns_correct_values()
         {
-            sbyte x12 = 3; Assert.IsFalse(GeneralUtilities.IsFloatingPint (x12));
+            sbyte x12 = 3; Assert.IsFalse(GeneralUtilities.IsFloatingPint(x12));
             byte x1 = 3; Assert.IsFalse(GeneralUtilities.IsFloatingPint(x1));
             short x2 = 3; Assert.IsFalse(GeneralUtilities.IsFloatingPint(x2));
             ushort x3 = 3; Assert.IsFalse(GeneralUtilities.IsFloatingPint(x3));
@@ -162,5 +164,4 @@ namespace TestRoslyn
 
         private enum Color { Red, Green, Blue }
     }
-
 }

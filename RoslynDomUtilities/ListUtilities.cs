@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace RoslynDom.Common
+﻿namespace RoslynDom.Common
 {
     public static class ListUtilities
     {
@@ -19,7 +15,7 @@ namespace RoslynDom.Common
         //    return CreateFromList(rawItems, makeNewItems);
         //}
 
-        //[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", 
+        //[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design",
         //    "CA1006:DoNotNestGenericTypesInMemberSignatures",
         //    Justification = "Apparently the problem is the Func returning a generic list. This is a good usage")]
         //public static IEnumerable<T> CreateFromList<T, TRaw>(

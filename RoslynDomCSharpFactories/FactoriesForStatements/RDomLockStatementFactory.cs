@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.CodeAnalysis;
+﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using RoslynDom.Common;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace RoslynDom.CSharp
 {
@@ -25,7 +23,7 @@ namespace RoslynDom.CSharp
                 if (_whitespaceLookup == null)
                 {
                     _whitespaceLookup = new WhitespaceKindLookup();
-                    _whitespaceLookup.Add(LanguageElement.Locked, SyntaxKind.LockKeyword );
+                    _whitespaceLookup.Add(LanguageElement.Locked, SyntaxKind.LockKeyword);
                     _whitespaceLookup.Add(LanguageElement.VariableStartDelimiter, SyntaxKind.OpenParenToken);
                     _whitespaceLookup.Add(LanguageElement.VariableEndDelimiter, SyntaxKind.CloseParenToken);
                     _whitespaceLookup.Add(LanguageElement.StatementBlockStartDelimiter, SyntaxKind.OpenBraceToken);

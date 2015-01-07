@@ -2,10 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RoslynDom.Common;
 
 namespace RoslynDom.Common
 {
@@ -30,7 +26,7 @@ namespace RoslynDom.Common
         public IEnumerable<IAttribute> Attributes
         { get { return _attributes; } }
 
-         public IEnumerator<IAttribute> GetEnumerator()
+        public IEnumerator<IAttribute> GetEnumerator()
         { return _attributes.GetEnumerator(); }
 
         [ExcludeFromCodeCoverage]

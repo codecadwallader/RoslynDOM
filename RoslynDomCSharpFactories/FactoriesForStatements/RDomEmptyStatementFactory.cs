@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.CodeAnalysis;
+﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using RoslynDom.Common;
+using System.Collections.Generic;
 
 namespace RoslynDom.CSharp
 {
@@ -15,7 +12,7 @@ namespace RoslynDom.CSharp
         private static WhitespaceKindLookup _whitespaceLookup;
 
         public RDomEmptyStatementFactory(RDomCorporation corporation)
-         : base(corporation)
+            : base(corporation)
         { }
 
         private WhitespaceKindLookup WhitespaceLookup
@@ -31,14 +28,14 @@ namespace RoslynDom.CSharp
             }
         }
 
-        protected override IDom CreateItemFrom(SyntaxNode syntaxNode, IDom parent,SemanticModel model)
+        protected override IDom CreateItemFrom(SyntaxNode syntaxNode, IDom parent, SemanticModel model)
         {
             var syntax = syntaxNode as EmptyStatementSyntax;
-            var newItem = new RDomEmptyStatement(syntaxNode,parent, model);
+            var newItem = new RDomEmptyStatement(syntaxNode, parent, model);
             CreateFromWorker.StandardInitialize(newItem, syntaxNode, parent, model, OutputContext);
             CreateFromWorker.StoreWhitespace(newItem, syntax, LanguagePart.Current, WhitespaceLookup);
 
-            return newItem ;
+            return newItem;
         }
 
         public override IEnumerable<SyntaxNode> BuildSyntax(IDom item)

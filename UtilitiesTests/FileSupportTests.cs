@@ -1,7 +1,7 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.IO;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RoslynDom.Common;
+using System;
+using System.IO;
 using System.Linq;
 
 namespace TestRoslyn
@@ -80,6 +80,5 @@ namespace TestRoslyn
             var results = FileSupport.GetFileContents(file);
             Assert.IsTrue(results.StartsWith("using KadMan.Common;"));
         }
-
     }
 }

@@ -10,6 +10,6 @@
         Default,
         MemberAccess,
         Identifier,
-      Null
-   }
+        Null
+    }
 }

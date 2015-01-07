@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 namespace RoslynDom.Common
 {
     public interface IEvent :
@@ -8,9 +6,9 @@ namespace RoslynDom.Common
              IOOTypeMember,
              ICanBeNew,
              IDom<IEvent>
-
     {
-         IReferencedType Type { get; set; }
+        IReferencedType Type { get; set; }
+
         // not yet supporting event accessors
     }
 }

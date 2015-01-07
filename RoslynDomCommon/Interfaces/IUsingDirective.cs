@@ -1,6 +1,6 @@
 ﻿namespace RoslynDom.Common
 {
-    public  interface IUsingDirective : IDom<IUsingDirective>, IStemMember
+    public interface IUsingDirective : IDom<IUsingDirective>, IStemMember
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming",
             "CA1716:IdentifiersShouldNotHaveIncorrectSuffix",

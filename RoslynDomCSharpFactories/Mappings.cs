@@ -1,17 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using RoslynDom.Common;
-using Microsoft.CodeAnalysis;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace RoslynDom.CSharp
 {
-   internal static class Mappings
-   {
-      private static List<Tuple<SyntaxKind, SyntaxKind, LiteralKind>> LiteralKindMap = new List<Tuple<SyntaxKind, SyntaxKind, LiteralKind>>()
+    internal static class Mappings
+    {
+        private static List<Tuple<SyntaxKind, SyntaxKind, LiteralKind>> LiteralKindMap = new List<Tuple<SyntaxKind, SyntaxKind, LiteralKind>>()
         {
             Tuple.Create(SyntaxKind.StringLiteralToken,  SyntaxKind.StringLiteralExpression,      LiteralKind.String),
             Tuple.Create(SyntaxKind.IdentifierToken,     SyntaxKind.SimpleMemberAccessExpression, LiteralKind.MemberAccess),
@@ -23,31 +21,31 @@ namespace RoslynDom.CSharp
             Tuple.Create(SyntaxKind.TypeOfKeyword,       SyntaxKind.TypeOfExpression,             LiteralKind.Type),
         };
 
-      public static LiteralKind LiteralKindFromSyntaxKind(SyntaxKind kind)
-      {
-         foreach (var tuple in LiteralKindMap)
-         {
-            if (tuple.Item1 == kind) { return tuple.Item3; }
-         }
-         throw new InvalidOperationException();
-      }
+        public static LiteralKind LiteralKindFromSyntaxKind(SyntaxKind kind)
+        {
+            foreach (var tuple in LiteralKindMap)
+            {
+                if (tuple.Item1 == kind) { return tuple.Item3; }
+            }
+            throw new InvalidOperationException();
+        }
 
-      public static SyntaxKind SyntaxKindFromLiteralKind(LiteralKind literalKind, object value)
-      {
-         if (literalKind == LiteralKind.Boolean)
-         {
-            if ((bool)value) { return SyntaxKind.TrueLiteralExpression; }
-            return SyntaxKind.FalseLiteralExpression;
-         }
-         foreach (var tuple in LiteralKindMap)
-         {
-            if (tuple.Item3 == literalKind)
-            { return tuple.Item2; }
-         }
-         throw new InvalidOperationException();
-      }
+        public static SyntaxKind SyntaxKindFromLiteralKind(LiteralKind literalKind, object value)
+        {
+            if (literalKind == LiteralKind.Boolean)
+            {
+                if ((bool)value) { return SyntaxKind.TrueLiteralExpression; }
+                return SyntaxKind.FalseLiteralExpression;
+            }
+            foreach (var tuple in LiteralKindMap)
+            {
+                if (tuple.Item3 == literalKind)
+                { return tuple.Item2; }
+            }
+            throw new InvalidOperationException();
+        }
 
-      private static List<Tuple<SyntaxKind, SyntaxKind, AssignmentOperator>> assignmentOpMap = new List<Tuple<SyntaxKind, SyntaxKind, AssignmentOperator>>()
+        private static List<Tuple<SyntaxKind, SyntaxKind, AssignmentOperator>> assignmentOpMap = new List<Tuple<SyntaxKind, SyntaxKind, AssignmentOperator>>()
         {
              Tuple.Create( SyntaxKind.SimpleAssignmentExpression,     SyntaxKind.EqualsToken,                        AssignmentOperator.Equals ),
              Tuple.Create( SyntaxKind.AddAssignmentExpression,        SyntaxKind.PlusEqualsToken,                    AssignmentOperator.AddAssignment),
@@ -62,43 +60,43 @@ namespace RoslynDom.CSharp
              Tuple.Create( SyntaxKind.RightShiftAssignmentExpression, SyntaxKind.LessThanLessThanEqualsToken,        AssignmentOperator.RightShiftAssignment)
         };
 
-      public static AssignmentOperator AssignmentOperatorFromCSharpKind(SyntaxKind kind)
-      {
-         foreach (var tuple in assignmentOpMap)
-         {
-            if (tuple.Item1 == kind) { return tuple.Item3; }
-         }
-         throw new InvalidOperationException();
-      }
+        public static AssignmentOperator AssignmentOperatorFromCSharpKind(SyntaxKind kind)
+        {
+            foreach (var tuple in assignmentOpMap)
+            {
+                if (tuple.Item1 == kind) { return tuple.Item3; }
+            }
+            throw new InvalidOperationException();
+        }
 
-      public static SyntaxKind SyntaxKindFromAssignmentOperator(AssignmentOperator op)
-      {
-         foreach (var tuple in assignmentOpMap)
-         {
-            if (tuple.Item3 == op) { return tuple.Item1; }
-         }
-         throw new InvalidOperationException();
-      }
+        public static SyntaxKind SyntaxKindFromAssignmentOperator(AssignmentOperator op)
+        {
+            foreach (var tuple in assignmentOpMap)
+            {
+                if (tuple.Item3 == op) { return tuple.Item1; }
+            }
+            throw new InvalidOperationException();
+        }
 
-      public static SyntaxKind SyntaxTokenKindFromAssignmentOperator(AssignmentOperator op)
-      {
-         foreach (var tuple in assignmentOpMap)
-         {
-            if (tuple.Item3 == op) { return tuple.Item2; }
-         }
-         throw new InvalidOperationException();
-      }
+        public static SyntaxKind SyntaxTokenKindFromAssignmentOperator(AssignmentOperator op)
+        {
+            foreach (var tuple in assignmentOpMap)
+            {
+                if (tuple.Item3 == op) { return tuple.Item2; }
+            }
+            throw new InvalidOperationException();
+        }
 
-      public static AssignmentOperator AssignmentOperatorFromTokenKind(SyntaxKind kind)
-      {
-         foreach (var tuple in assignmentOpMap)
-         {
-            if (tuple.Item2 == kind) { return tuple.Item3; }
-         }
-         throw new InvalidOperationException();
-      }
+        public static AssignmentOperator AssignmentOperatorFromTokenKind(SyntaxKind kind)
+        {
+            foreach (var tuple in assignmentOpMap)
+            {
+                if (tuple.Item2 == kind) { return tuple.Item3; }
+            }
+            throw new InvalidOperationException();
+        }
 
-      private static List<Tuple<SyntaxKind, Operator>> operatorMap = new List<Tuple<SyntaxKind, Operator>>()
+        private static List<Tuple<SyntaxKind, Operator>> operatorMap = new List<Tuple<SyntaxKind, Operator>>()
         {
              Tuple.Create( SyntaxKind.PlusToken                      , Operator.Plus),
              Tuple.Create( SyntaxKind.MinusToken                     , Operator.Minus),
@@ -118,29 +116,25 @@ namespace RoslynDom.CSharp
              Tuple.Create( SyntaxKind.LessThanEqualsToken            , Operator.LessThanEquals)
         };
 
+        public static Operator OperatorFromCSharpKind(SyntaxKind kind)
+        {
+            foreach (var tuple in operatorMap)
+            {
+                if (tuple.Item1 == kind) { return tuple.Item2; }
+            }
+            throw new InvalidOperationException();
+        }
 
+        public static SyntaxKind SyntaxKindFromOperator(Operator op)
+        {
+            foreach (var tuple in operatorMap)
+            {
+                if (tuple.Item2 == op) { return tuple.Item1; }
+            }
+            throw new InvalidOperationException();
+        }
 
-
-      public static Operator OperatorFromCSharpKind(SyntaxKind kind)
-      {
-         foreach (var tuple in operatorMap)
-         {
-            if (tuple.Item1 == kind) { return tuple.Item2; }
-         }
-         throw new InvalidOperationException();
-      }
-
-      public static SyntaxKind SyntaxKindFromOperator(Operator op)
-      {
-         foreach (var tuple in operatorMap)
-         {
-            if (tuple.Item2 == op) { return tuple.Item1; }
-         }
-         throw new InvalidOperationException();
-      }
-
-
-      private static List<Tuple<Accessibility, AccessModifier>> accessModifierMap = new List<Tuple<Accessibility, AccessModifier>>()
+        private static List<Tuple<Accessibility, AccessModifier>> accessModifierMap = new List<Tuple<Accessibility, AccessModifier>>()
         {
              Tuple.Create(Accessibility.Private             , AccessModifier.Private),
              Tuple.Create(Accessibility.ProtectedAndInternal, AccessModifier.ProtectedAndInternal),
@@ -153,25 +147,26 @@ namespace RoslynDom.CSharp
              Tuple.Create(Accessibility.ProtectedOrFriend   , AccessModifier.ProtectedOrFriend),
              Tuple.Create(Accessibility.Public              , AccessModifier.Public )
         };
-      public static Accessibility AccessibilityFromAccessModifier(AccessModifier accessModifier)
-      {
-         foreach (var tuple in accessModifierMap)
-         {
-            if (tuple.Item2 == accessModifier) { return tuple.Item1; }
-         }
-         throw new InvalidOperationException();
-      }
 
-      public static AccessModifier AccessModifierFromAccessibility(Accessibility accessibility)
-      {
-         foreach (var tuple in accessModifierMap)
-         {
-            if (tuple.Item1 == accessibility) { return tuple.Item2; }
-         }
-         throw new InvalidOperationException();
-      }
+        public static Accessibility AccessibilityFromAccessModifier(AccessModifier accessModifier)
+        {
+            foreach (var tuple in accessModifierMap)
+            {
+                if (tuple.Item2 == accessModifier) { return tuple.Item1; }
+            }
+            throw new InvalidOperationException();
+        }
 
-      private static List<Tuple<SyntaxKind, string, string>> typeAliasMap = new List<Tuple<SyntaxKind, string, string>>()
+        public static AccessModifier AccessModifierFromAccessibility(Accessibility accessibility)
+        {
+            foreach (var tuple in accessModifierMap)
+            {
+                if (tuple.Item1 == accessibility) { return tuple.Item2; }
+            }
+            throw new InvalidOperationException();
+        }
+
+        private static List<Tuple<SyntaxKind, string, string>> typeAliasMap = new List<Tuple<SyntaxKind, string, string>>()
         {
              Tuple.Create(SyntaxKind.SByteKeyword,   "sbyte"  ,"SByte"),
              Tuple.Create(SyntaxKind.ShortKeyword,   "short"  ,"Int16"),
@@ -189,54 +184,52 @@ namespace RoslynDom.CSharp
              Tuple.Create(SyntaxKind.CharKeyword,    "char"   ,"Char")
         };
 
-      public static bool IsTypeAlias(SyntaxKind type)
-      {
-         return typeAliasMap.Any(x => x.Item1 == type);
-      }
+        public static bool IsTypeAlias(SyntaxKind type)
+        {
+            return typeAliasMap.Any(x => x.Item1 == type);
+        }
 
-      public static string SystemTypeFromAlias(string alias)
-      {
-         foreach (var tuple in typeAliasMap)
-         {
-            if (tuple.Item2 == alias) { return tuple.Item3; }
-         }
-         throw new InvalidOperationException();
-      }
+        public static string SystemTypeFromAlias(string alias)
+        {
+            foreach (var tuple in typeAliasMap)
+            {
+                if (tuple.Item2 == alias) { return tuple.Item3; }
+            }
+            throw new InvalidOperationException();
+        }
 
-      public static string AliasFromSystemType(string systemTypeName)
-      {
-         foreach (var tuple in typeAliasMap)
-         {
-            if (tuple.Item3 == systemTypeName) { return tuple.Item2; }
-         }
-         throw new InvalidOperationException();
-      }
+        public static string AliasFromSystemType(string systemTypeName)
+        {
+            foreach (var tuple in typeAliasMap)
+            {
+                if (tuple.Item3 == systemTypeName) { return tuple.Item2; }
+            }
+            throw new InvalidOperationException();
+        }
 
-
-      private static List<Tuple<SyntaxKind, Variance>> GenericVarianceMap = new List<Tuple<SyntaxKind, Variance>>()
+        private static List<Tuple<SyntaxKind, Variance>> GenericVarianceMap = new List<Tuple<SyntaxKind, Variance>>()
         {
             Tuple.Create( SyntaxKind.InKeyword,     Variance.In),
             Tuple.Create( SyntaxKind.OutKeyword,             Variance.Out)
         };
 
-      public static Variance VarianceFromVarianceKind(SyntaxKind kind)
-      {
-         foreach (var tuple in GenericVarianceMap)
-         {
-            if (tuple.Item1 == kind) { return tuple.Item2; }
-         }
-         return Variance.None;
-      }
+        public static Variance VarianceFromVarianceKind(SyntaxKind kind)
+        {
+            foreach (var tuple in GenericVarianceMap)
+            {
+                if (tuple.Item1 == kind) { return tuple.Item2; }
+            }
+            return Variance.None;
+        }
 
-      public static SyntaxKind VarianceKindFromVariance(Variance variance)
-      {
-
-         foreach (var tuple in GenericVarianceMap)
-         {
-            if (tuple.Item2 == variance)
-            { return tuple.Item1; }
-         }
-         return SyntaxKind.None;
-      }
-   }
+        public static SyntaxKind VarianceKindFromVariance(Variance variance)
+        {
+            foreach (var tuple in GenericVarianceMap)
+            {
+                if (tuple.Item2 == variance)
+                { return tuple.Item1; }
+            }
+            return SyntaxKind.None;
+        }
+    }
 }

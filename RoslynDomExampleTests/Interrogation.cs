@@ -1,8 +1,7 @@
-﻿using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using RoslynDom;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RoslynDom.Common;
 using RoslynDom.CSharp;
+using System.Linq;
 
 namespace RoslynDomExampleTests
 {
@@ -27,8 +26,8 @@ namespace RoslynDomExampleTests
         [TestMethod]
         public void Interrogate_non_empty_namespaces()
         {
-             // Nonempty namespaces are anticipated to be the primary namespace access mechanism. 
-           IRoot root = RDom.CSharp.LoadFromFile(@"..\..\TestFile.cs");
+            // Nonempty namespaces are anticipated to be the primary namespace access mechanism.
+            IRoot root = RDom.CSharp.LoadFromFile(@"..\..\TestFile.cs");
             var nspaces = root.Namespaces.ToArray();
             Assert.AreEqual(2, nspaces.Count());
             Assert.AreEqual("testing", nspaces[0].Name);
@@ -62,7 +61,6 @@ namespace RoslynDomExampleTests
             Assert.AreEqual("Namespace2", nspaces[5].Name);
         }
 
-  
         [TestMethod]
         public void Interrogate_classes_in_namespaces()
         {
@@ -177,15 +175,15 @@ namespace RoslynDomExampleTests
         [TestMethod]
         public void Interrogate_attributes_for_class()
         {
-IRoot root = RDom.CSharp.LoadFromFile(@"..\..\TestFile.cs");
-var class1 = root.Namespaces.Last().Classes.First();
-var attributes = class1.Attributes.Attributes.ToArray();
-Assert.AreEqual(2, attributes.Count());
-Assert.AreEqual("ExcludeFromCodeCoverage", attributes[0].Name);
-Assert.AreEqual("EventSource", attributes[1].Name);
-Assert.AreEqual("Name", attributes[1].AttributeValues.First().Name);
-Assert.AreEqual("George", attributes[1].AttributeValues.First().Value);
-Assert.AreEqual(LiteralKind.String, attributes[1].AttributeValues.First().ValueType);
+            IRoot root = RDom.CSharp.LoadFromFile(@"..\..\TestFile.cs");
+            var class1 = root.Namespaces.Last().Classes.First();
+            var attributes = class1.Attributes.Attributes.ToArray();
+            Assert.AreEqual(2, attributes.Count());
+            Assert.AreEqual("ExcludeFromCodeCoverage", attributes[0].Name);
+            Assert.AreEqual("EventSource", attributes[1].Name);
+            Assert.AreEqual("Name", attributes[1].AttributeValues.First().Name);
+            Assert.AreEqual("George", attributes[1].AttributeValues.First().Value);
+            Assert.AreEqual(LiteralKind.String, attributes[1].AttributeValues.First().ValueType);
         }
     }
 }

@@ -2,7 +2,7 @@ using Microsoft.CodeAnalysis;
 
 namespace RoslynDom
 {
-    public  interface IRoslynHasSymbol
+    public interface IRoslynHasSymbol
     {
         ISymbol Symbol { get; }
     }

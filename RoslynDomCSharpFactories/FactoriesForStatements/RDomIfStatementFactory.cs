@@ -1,22 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.CodeAnalysis;
+﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using RoslynDom.Common;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace RoslynDom.CSharp
 {
-
     public class RDomIfStatementFactory
          : RDomBaseSyntaxNodeFactory<RDomIfStatement, IfStatementSyntax>
     {
-
         private static WhitespaceKindLookup _whitespaceLookup;
 
         public RDomIfStatementFactory(RDomCorporation corporation)
-         : base(corporation)
+            : base(corporation)
         { }
 
         private WhitespaceKindLookup WhitespaceLookup
@@ -46,7 +43,7 @@ namespace RoslynDom.CSharp
 
         private RDomIfStatement CreateCollapsing(IfStatementSyntax syntax, IDom parent, SemanticModel model)
         {
-            // You can't use descendants here becuase it is a very specific pattern 
+            // You can't use descendants here becuase it is a very specific pattern
             var newItem = new RDomIfStatement(syntax, parent, model);
             UpdateItem(newItem, syntax.Statement, syntax.Condition, syntax, parent, model);
             var currentSyntax = syntax;
@@ -57,11 +54,11 @@ namespace RoslynDom.CSharp
                 if (currentSyntax.Else == null) // We're done
                 { break; }
                 var elseAsIf = currentSyntax.Else.Statement as IfStatementSyntax;
-                if (elseAsIf != null)  
+                if (elseAsIf != null)
                 {
                     var newElse = new RDomElseIfStatement(elseAsIf, newItem, model);
                     UpdateItem(newElse, elseAsIf.Statement, elseAsIf.Condition, elseAsIf, newItem, model);
-                    CreateFromWorker.StoreWhitespaceForToken(newElse, currentSyntax.Else.ElseKeyword, 
+                    CreateFromWorker.StoreWhitespaceForToken(newElse, currentSyntax.Else.ElseKeyword,
                                 LanguagePart.Current, LanguageElement.ElseKeyword);
                     newItem.Elses.AddOrMove(newElse);
                     lastItem = newElse;
@@ -71,7 +68,7 @@ namespace RoslynDom.CSharp
                 {
                     var newElse = new RDomElseStatement(currentSyntax.Else, newItem, model);
                     UpdateItem(newElse, currentSyntax.Else.Statement, null, currentSyntax.Else, newItem, model);
-                    CreateFromWorker.StoreWhitespaceForToken(newElse, currentSyntax.Else.ElseKeyword, 
+                    CreateFromWorker.StoreWhitespaceForToken(newElse, currentSyntax.Else.ElseKeyword,
                                 LanguagePart.Current, LanguageElement.ElseKeyword);
                     newItem.Elses.AddOrMove(newElse);
                     break;
@@ -79,7 +76,6 @@ namespace RoslynDom.CSharp
             }
             return newItem;
         }
-
 
         private void UpdateItem<T>(T newItem, StatementSyntax statement, ExpressionSyntax condition,
                    SyntaxNode syntax, IDom parent, SemanticModel model)

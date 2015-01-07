@@ -1,29 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.CodeAnalysis;
+﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using RoslynDom.Common;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace RoslynDom.CSharp
 {
     public class BuildSyntaxWorker : ICSharpBuildSyntaxWorker
     {
-      private RDomCorporation corporation;
-      public RDomCorporation Corporation
-      {
-         get { return corporation; }
-         set
-         {
-            if (corporation != null) throw new InvalidOperationException("Can't reset corporation");
-            corporation = value;
-         }
-      }
+        private RDomCorporation corporation;
 
-      public RDomPriority Priority
+        public RDomCorporation Corporation
+        {
+            get { return corporation; }
+            set
+            {
+                if (corporation != null) throw new InvalidOperationException("Can't reset corporation");
+                corporation = value;
+            }
+        }
+
+        public RDomPriority Priority
         { get { return RDomPriority.Normal; } }
 
         public SyntaxList<AttributeListSyntax> BuildAttributeSyntax(AttributeCollection attributes)
@@ -38,7 +37,7 @@ namespace RoslynDom.CSharp
             }
             if (!ret.Any()) { SyntaxFactory.List<AttributeListSyntax>(); }
             var attributeSyntaxes = ret.OfType<AttributeListSyntax>();
-            return SyntaxFactory.List<AttributeListSyntax>( attributeSyntaxes);
+            return SyntaxFactory.List<AttributeListSyntax>(attributeSyntaxes);
         }
 
         public BlockSyntax GetStatementBlock(IEnumerable<IStatementAndDetail> statements)

@@ -17,20 +17,20 @@ namespace RoslynDom.Common
         /// </returns>
         /// <remarks>
         /// From Benson Joeris suggesting the algorithm I coded here:<br/><br/>
-        /// It sounds like you want to enumerate subsets of {1,...,N}. There are 2^N of these, 
-        /// and they can fairly easily be encoded as the integers 1,...,(2^N)-1, by thinking 
-        /// about the numbers in binary. If the least significant bit is 1, then string 1 is 
-        /// included, and if it is 0, string 1 is not included. The next least significant bit 
-        /// encodes whether string 2 is included, and so on. So, with a little bit manipulation, 
-        /// you can decode an integer into the string arrays you are looking for, and then just 
-        /// have to loop over 1,...,(2^N)-1 (or 0,...,(2^N)-1, if you want to include the empty 
+        /// It sounds like you want to enumerate subsets of {1,...,N}. There are 2^N of these,
+        /// and they can fairly easily be encoded as the integers 1,...,(2^N)-1, by thinking
+        /// about the numbers in binary. If the least significant bit is 1, then string 1 is
+        /// included, and if it is 0, string 1 is not included. The next least significant bit
+        /// encodes whether string 2 is included, and so on. So, with a little bit manipulation,
+        /// you can decode an integer into the string arrays you are looking for, and then just
+        /// have to loop over 1,...,(2^N)-1 (or 0,...,(2^N)-1, if you want to include the empty
         /// set of strings)
         /// <br/>
         /// This method is not currently in use, but I strongly anticipate it's use in analyzing
-        /// #ifdef in template resolution, and it's of sufficient complexity I am leaving it in 
+        /// #ifdef in template resolution, and it's of sufficient complexity I am leaving it in
         /// place
         /// </remarks>
-        public static IEnumerable<IEnumerable<T>> GetAllCombos<T>(this IList <T> initialList)
+        public static IEnumerable<IEnumerable<T>> GetAllCombos<T>(this IList<T> initialList)
         {
             var ret = new List<List<T>>();
             if (initialList == null) { return ret; }

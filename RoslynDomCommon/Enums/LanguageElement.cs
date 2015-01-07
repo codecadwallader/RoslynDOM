@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace RoslynDom.Common
+﻿namespace RoslynDom.Common
 {
     public enum LanguageElement
     {
@@ -183,9 +177,9 @@ namespace RoslynDom.Common
         OutParameter,
         RefParameter,
         ParamsParameter,
-      ConstructorInitializerArgument,
-      FirstToken,
-      Event,
-      Detail,
-   }
+        ConstructorInitializerArgument,
+        FirstToken,
+        Event,
+        Detail,
+    }
 }

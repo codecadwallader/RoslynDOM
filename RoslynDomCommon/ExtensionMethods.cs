@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RoslynDom.Common
 {
@@ -35,7 +33,7 @@ namespace RoslynDom.Common
             return ret;
         }
 
-        public static IEnumerable<T> PreviousSiblingsUntil<T>(this IEnumerable<T> list, 
+        public static IEnumerable<T> PreviousSiblingsUntil<T>(this IEnumerable<T> list,
             T item, Func<T, bool> condition)
         {
             if (list == null) throw new NotImplementedException();
@@ -76,7 +74,5 @@ namespace RoslynDom.Common
             }
             return ret;
         }
-
-   
     }
 }

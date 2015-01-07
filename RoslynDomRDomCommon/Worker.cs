@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.CodeAnalysis;
-
-namespace RoslynDom.Common
+﻿namespace RoslynDom.Common
 {
     public class Worker
     {
@@ -16,8 +9,7 @@ namespace RoslynDom.Common
         }
 
         public ICreateFromWorker CreateFromWorker { get; private set; }
-        public IBuildSyntaxWorker BuildSyntaxWorker { get; private set; }
 
-   
+        public IBuildSyntaxWorker BuildSyntaxWorker { get; private set; }
     }
 }

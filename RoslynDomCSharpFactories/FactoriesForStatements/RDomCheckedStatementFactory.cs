@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.CodeAnalysis;
+﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using RoslynDom.Common;
+using System.Collections.Generic;
 
 namespace RoslynDom.CSharp
 {
@@ -15,7 +12,7 @@ namespace RoslynDom.CSharp
         private static WhitespaceKindLookup _whitespaceLookup;
 
         public RDomCheckedStatementFactory(RDomCorporation corporation)
-         : base(corporation)
+            : base(corporation)
         { }
 
         private WhitespaceKindLookup WhitespaceLookup
@@ -26,7 +23,7 @@ namespace RoslynDom.CSharp
                 {
                     _whitespaceLookup = new WhitespaceKindLookup();
                     _whitespaceLookup.Add(LanguageElement.Checked, SyntaxKind.CheckedKeyword);
-                    _whitespaceLookup.Add(LanguageElement.Unchecked, SyntaxKind.UncheckedKeyword );
+                    _whitespaceLookup.Add(LanguageElement.Unchecked, SyntaxKind.UncheckedKeyword);
                     _whitespaceLookup.Add(LanguageElement.StatementBlockStartDelimiter, SyntaxKind.OpenBraceToken);
                     _whitespaceLookup.Add(LanguageElement.StatementBlockEndDelimiter, SyntaxKind.CloseBraceToken);
                     _whitespaceLookup.AddRange(WhitespaceKindLookup.Eol);
@@ -56,7 +53,6 @@ namespace RoslynDom.CSharp
             var kind = itemAsT.Unchecked ? SyntaxKind.UncheckedStatement : SyntaxKind.CheckedStatement;
 
             var node = SyntaxFactory.CheckedStatement(kind, statement);
-
 
             node = BuildSyntaxHelpers.AttachWhitespace(node, itemAsT.Whitespace2Set, WhitespaceLookup);
             return node.PrepareForBuildSyntaxOutput(item, OutputContext);

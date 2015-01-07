@@ -11,10 +11,9 @@
         Interface,
         Whitespace,
         Comment,
-        Invalid, 
+        Invalid,
         RegionStart,
         RegionEnd,
         PublicAnnotation
-
     }
 }

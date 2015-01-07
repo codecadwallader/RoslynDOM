@@ -1,12 +1,11 @@
-﻿using System;
-using System.IO;
+﻿using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.MSBuild;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Linq;
-using RoslynDom;
-using Microsoft.CodeAnalysis.CSharp;
 using RoslynDom.Common;
 using RoslynDom.CSharp;
+using System;
+using System.IO;
+using System.Linq;
 
 namespace RoslynDomExampleTests
 {
@@ -43,8 +42,8 @@ namespace RoslynDomExampleTests
         [TestMethod]
         public void Load_root_from_document_example()
         {
-         Assert.Inconclusive(); // workspace problem
-         var slnFile = TestUtilities.GetNearestSolution(Environment.CurrentDirectory);
+            Assert.Inconclusive(); // workspace problem
+            var slnFile = TestUtilities.GetNearestSolution(Environment.CurrentDirectory);
             var ws = MSBuildWorkspace.Create();
             var solution = ws.OpenSolutionAsync(slnFile).Result;
             var project = solution.Projects.Where(x => x.Name == "RoslynDomExampleTests").FirstOrDefault();
@@ -54,7 +53,5 @@ namespace RoslynDomExampleTests
             Assert.IsNotNull(root);
             Assert.AreEqual(3, root.ChildNamespaces.Count());
         }
-
-
     }
 }

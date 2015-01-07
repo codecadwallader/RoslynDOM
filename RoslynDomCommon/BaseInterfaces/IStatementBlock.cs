@@ -2,10 +2,12 @@
 
 namespace RoslynDom.Common
 {
-     public interface IStatementBlock : IDom
+    public interface IStatementBlock : IDom
     {
         RDomCollection<IStatementAndDetail> StatementsAll { get; }
-        IEnumerable <IStatement> Statements { get; }
+
+        IEnumerable<IStatement> Statements { get; }
+
         bool HasBlock { get; set; }
     }
 }

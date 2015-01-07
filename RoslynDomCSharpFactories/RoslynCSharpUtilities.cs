@@ -1,15 +1,14 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Microsoft.CodeAnalysis;
+﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using RoslynDom.Common;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace RoslynDom.CSharp
 {
-   public static class RoslynCSharpUtilities
+    public static class RoslynCSharpUtilities
     {
-
         public static string NameFrom(this SyntaxNode node)
         {
             var qualifiedNameNode = node.ChildNodes()
@@ -37,8 +36,8 @@ namespace RoslynDom.CSharp
             return nameToken.ValueText;
         }
 
-           public static StatementSyntax BuildStatement(IEnumerable<IStatement> statements, 
-                IStatementBlock parent, WhitespaceKindLookup whitespaceLookup)
+        public static StatementSyntax BuildStatement(IEnumerable<IStatement> statements,
+             IStatementBlock parent, WhitespaceKindLookup whitespaceLookup)
         {
             StatementSyntax statementBlock;
             var statementSyntaxList = statements
@@ -63,6 +62,5 @@ namespace RoslynDom.CSharp
             }
             return statementBlock;
         }
-
-     }
+    }
 }

@@ -6,6 +6,7 @@ namespace RoslynDom.Common
     public interface IEnum : IType<IEnum>, IContainer
     {
         IReferencedType UnderlyingType { get; set; }
+
         RDomCollection<IEnumMember> Members { get; }
     }
 }
